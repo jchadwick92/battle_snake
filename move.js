@@ -1,3 +1,3 @@
-export function move(state) {
+export const move = (state) => {
     console.log(state)
 }
