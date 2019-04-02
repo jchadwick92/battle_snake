@@ -40,12 +40,10 @@ app.post('/move', (request, response) => {
   // NOTE: Do something here to generate your move
 
   // Response data
-  // const data = {
-  //   move: 'right', // one of: ['up','down','left','right']
-  // }
-  // console.log("**************   request:", request.body)
-
-  data = move(request.body);
+  const data = {
+    move: 'right', // one of: ['up','down','left','right']
+  }
+  console.log("**************   request:", request.body)
 
   return response.json(data)
 })
