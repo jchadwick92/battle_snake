@@ -9,6 +9,8 @@ const {
   poweredByHandler
 } = require('./handlers.js')
 
+const move = require('./move')
+
 // For deployment to Heroku, the port needs to be set using ENV, so
 // we check for the port number in process.env
 app.set('port', (process.env.PORT || 9001))
@@ -41,6 +43,7 @@ app.post('/move', (request, response) => {
   const data = {
     move: 'up', // one of: ['up','down','left','right']
   }
+  data = move(request);
 
   return response.json(data)
 })
