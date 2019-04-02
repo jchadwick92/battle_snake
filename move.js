@@ -1,3 +1,5 @@
-export const move = (state) => {
+const move = (state) => {
     console.log(state)
 }
+
+module.export = {move}
