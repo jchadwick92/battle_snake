@@ -30,10 +30,10 @@ function getYDist(snakeHead, point) {
 }
 
 function setSnakeHeadPos(state) {
-  snakeHeadPos = state.you.body.data[0];
+  snakeHeadPos = state.you.body[0]; // state.you.body.data[0];
 }
 function setFoodPositions(state) {
-  foodPositions = state.food.data;
+  foodPositions = state.food; // state.food.data;
 }
 
 module.exports = function move(state) {
@@ -120,8 +120,10 @@ module.exports = function move(state) {
 };
 
 function markCells(state, board) {
-  state.snakes.data.map(snake =>
-    snake.body.data.map(point => {
+  //  state.snakes.data.map(snake =>
+  state.snakes.map(snake =>
+  //  snake.body.data.map(point => {
+    snake.body.map(point => {
       fillPoint(point.x, point.y, 1, board);
     })
   );
