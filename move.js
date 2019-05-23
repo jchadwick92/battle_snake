@@ -26,10 +26,8 @@ module.exports = function move(state) {
 
   // mark dead ends
   markDeadEnds(initialPossibleMoves)
-  console.log("aaaa")
 
   possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
-  console.log(possibleMoves)
 
   console.log(board);
   console.log(copiedBoard);
@@ -51,28 +49,24 @@ function markDeadEnds(possibleMoves) {
   possibleMoves.forEach(move => {
     if (move === "right") {
       let right = countAvailableSpaces(snakeHeadPos.x + 1, snakeHeadPos.y, 2);
-      console.log("available spaces right: ", right)
       if (right > 0 && right < 15) {
         fillBoardFromCopy(2, copiedBoard, board);
       }
     }
     if (move === "left") {
       let left = countAvailableSpaces(snakeHeadPos.x - 1, snakeHeadPos.y, 3);
-      console.log("available spaces left: ", left)
       if (left > 0 && left < 15) {
         fillBoardFromCopy(3, copiedBoard, board);
       }
     }
     if (move === "down") {
       let down = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y + 1, 4);
-      console.log("available spaces down: ", down)
       if (down > 0 && down < 15) {
         fillBoardFromCopy(4, copiedBoard, board);
       }
     }
     if (move === "up") {
       let up = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y - 1, 5);
-      console.log("available spaces up: ", up)
       if (up > 0 && up < 15) {
         fillBoardFromCopy(5, copiedBoard, board);
       }
@@ -198,32 +192,26 @@ function determineMove() {
 }
 
 function countAvailableSpaces(x, y, fill) {
-  console.log("width: ", gameState.board.width)
   let right = 0;
   let left = 0;
   let down = 0;
   let up = 0;
   if (copiedBoard[y][x] !== 0) {
     // if point is filled end recursion
-    console.log("end recursion")
     return 0;
   }
   copiedBoard[y][x] = fill;
 
   if (x < gameState.board.width - 1) {
-    console.log("a")
     right = countAvailableSpaces(x + 1, y, fill);
   }
   if (x > 0) {
-    console.log("b")
     left = countAvailableSpaces(x - 1, y, fill);
   }
   if (y < gameState.board.height - 1) {
-    console.log("c")
     down = countAvailableSpaces(x, y + 1, fill);
   }
   if (y > 0) {
-    console.log("d")
     up = countAvailableSpaces(x, y - 1, fill);
   }
   return 1 + right + left + up + down;
