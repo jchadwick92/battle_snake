@@ -107,15 +107,15 @@ function setFoodPositions(state) {
 }
 
 function markCells(state, board) {
-    state.board.snakes.map(snake =>
-      snake.body.map(point => {
+    state.board.snakes.forEach(snake =>
+      snake.body.forEach(point => {
       fillPoint(point.x, point.y, 1, board);
     })
   );
 }
 // (x > 0 && x < board.width && y > 0 && y < board.height)
 function markSnakesMoves(state, board) {
-  state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y)).map(snake => {
+  state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y)).forEach(snake => {
     console.log("my snake: ", snakeHeadPos)
     console.log("snake: ", snake.body[0])
     if (snake.body[0].x > 0) {
