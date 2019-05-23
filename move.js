@@ -76,11 +76,13 @@ function markDeadEnds(possibleMoves) {
 
 function findClosestFood() {
   console.log("food positions: ", foodPositions)
-  return foodPositions
+  if (foodPositions.length !== 0) {
+    return foodPositions
     .map(food =>
       Object.assign({}, food, { dist: calculateDistance(snakeHeadPos, food) })
     )
     .reduce((prev, curr) => (prev.dist < curr.dist ? prev : curr));
+  }
 }
 
 function calculateDistance(snakeHead, food) {
