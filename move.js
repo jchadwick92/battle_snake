@@ -22,10 +22,10 @@ module.exports = function move(state) {
   markCells(state, copiedBoard);
 
   initialPossibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
-  console.log(initialPossibleMoves);
+  console.log("initial possible moves: ", initialPossibleMoves);
 
   // mark dead ends
-  markDeadEnds("initial possible moves: ",initialPossibleMoves)
+  markDeadEnds(initialPossibleMoves)
 
   possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
   console.log("possible moves: ", possibleMoves)
