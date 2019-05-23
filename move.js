@@ -21,6 +21,7 @@ module.exports = function move(state) {
 
   copiedBoard = createEmptyBoard(state);
   markCells(state, copiedBoard);
+  markSnakesMoves(state, copiedBoard)
 
   initialPossibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
   console.log("initial possible moves: ", initialPossibleMoves);
