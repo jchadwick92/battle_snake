@@ -50,29 +50,29 @@ function fillBoardFromCopy(fill, copiedBoard, board) {
 function markDeadEnds(possibleMoves) {
   possibleMoves.forEach(move => {
     if (move === "right") {
-      console.log("move right available")
       let right = countAvailableSpaces(snakeHeadPos.x + 1, snakeHeadPos.y, 2);
+      console.log("available spaces right: ", right)
       if (right > 0 && right < 15) {
         fillBoardFromCopy(2, copiedBoard, board);
       }
     }
     if (move === "left") {
-      console.log("move left available")
       let left = countAvailableSpaces(snakeHeadPos.x - 1, snakeHeadPos.y, 3);
+      console.log("available spaces left: ", left)
       if (left > 0 && left < 15) {
         fillBoardFromCopy(3, copiedBoard, board);
       }
     }
     if (move === "down") {
-      console.log("move down available")
       let down = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y + 1, 4);
+      console.log("available spaces down: ", down)
       if (down > 0 && down < 15) {
         fillBoardFromCopy(4, copiedBoard, board);
       }
     }
     if (move === "up") {
-      console.log("move up available")
       let up = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y - 1, 5);
+      console.log("available spaces up: ", up)
       if (up > 0 && up < 15) {
         fillBoardFromCopy(5, copiedBoard, board);
       }
