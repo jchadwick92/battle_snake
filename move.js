@@ -25,13 +25,13 @@ module.exports = function move(state) {
   console.log(initialPossibleMoves);
 
   // mark dead ends
-  markDeadEnds(initialPossibleMoves)
+  markDeadEnds("initial possible moves: ",initialPossibleMoves)
 
   possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
+  console.log("possible moves: ", possibleMoves)
 
-  console.log(board);
-  console.log(copiedBoard);
   closestFoodPos = findClosestFood();
+  console.log("closest food: ", findClosestFood)
   return determineMove();
 };
 
@@ -75,6 +75,7 @@ function markDeadEnds(possibleMoves) {
 }
 
 function findClosestFood() {
+  console.log("food positions: ", foodPositions)
   return foodPositions
     .map(food =>
       Object.assign({}, food, { dist: calculateDistance(snakeHeadPos, food) })
