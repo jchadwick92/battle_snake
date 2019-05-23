@@ -31,7 +31,7 @@ module.exports = function move(state) {
   console.log("possible moves: ", possibleMoves)
 
   closestFoodPos = findClosestFood();
-  console.log("closest food: ", findClosestFood)
+  console.log("closest food: ", findClosestFood())
   return determineMove();
 };
 
@@ -82,6 +82,8 @@ function findClosestFood() {
       Object.assign({}, food, { dist: calculateDistance(snakeHeadPos, food) })
     )
     .reduce((prev, curr) => (prev.dist < curr.dist ? prev : curr));
+  } else {
+    return false
   }
 }
 
@@ -161,37 +163,42 @@ function determineMove() {
   if (possibleMoves.length == 1) {
     return { move: possibleMoves[0] };
   }
-  if (
-    getXDist(snakeHeadPos, closestFoodPos) > 0 &&
-    possibleMoves.includes("right")
-  ) {
-    console.log("food unblocked right");
-    return { move: "right" };
-  }
-  if (
-    getXDist(snakeHeadPos, closestFoodPos) < 0 &&
-    possibleMoves.includes("left")
-  ) {
-    console.log("food unblocked left");
-    return { move: "left" };
-  }
-  if (
-    getYDist(snakeHeadPos, closestFoodPos) > 0 &&
-    possibleMoves.includes("down")
-  ) {
-    console.log("food unblocked down");
-    return { move: "down" };
-  }
-  if (
-    getYDist(snakeHeadPos, closestFoodPos) < 0 &&
-    possibleMoves.includes("up")
-  ) {
-    console.log("food unblocked up");
-    return { move: "up" };
+  if (closestFoodPos) {
+    if (
+      getXDist(snakeHeadPos, closestFoodPos) > 0 &&
+      possibleMoves.includes("right")
+    ) {
+      console.log("food unblocked right");
+      return { move: "right" };
+    }
+    if (
+      getXDist(snakeHeadPos, closestFoodPos) < 0 &&
+      possibleMoves.includes("left")
+    ) {
+      console.log("food unblocked left");
+      return { move: "left" };
+    }
+    if (
+      getYDist(snakeHeadPos, closestFoodPos) > 0 &&
+      possibleMoves.includes("down")
+    ) {
+      console.log("food unblocked down");
+      return { move: "down" };
+    }
+    if (
+      getYDist(snakeHeadPos, closestFoodPos) < 0 &&
+      possibleMoves.includes("up")
+    ) {
+      console.log("food unblocked up");
+      return { move: "up" };
+    } else
+      return {
+        move: possibleMoves[Math.floor(Math.random() * possibleMoves.length)]
+      }; // do better here
   } else
-    return {
-      move: possibleMoves[Math.floor(Math.random() * possibleMoves.length)]
-    }; // do better here
+  return {
+    move: possibleMoves[Math.floor(Math.random() * possibleMoves.length)]
+  }; // do better here
 }
 
 function countAvailableSpaces(x, y, fill) {
