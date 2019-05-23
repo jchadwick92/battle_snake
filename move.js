@@ -15,9 +15,8 @@ module.exports = function move(state) {
   console.log("state: ", state)
   gameState = state;
   setSnakeHeadPos(state);
-  console.log("snakehead pos: ", snakeHeadPos)
   setFoodPositions(state);
-  console.log("food pos: ", snakeHeadPos)
+  console.log("food pos: ", closestFoodPos)
   board = createEmptyBoard(state);
   markCells(state, board);
 
@@ -106,7 +105,7 @@ function setFoodPositions(state) {
 
 function markCells(state, board) {
   //state.snakes.data.map(snake =>
-    state.snakes.map(snake =>
+    state.board.snakes.map(snake =>
     //snake.body.data.map(point => {
       snake.body.map(point => {
       fillPoint(point.x, point.y, 1, board);
@@ -120,9 +119,9 @@ function fillPoint(x, y, number, board) {
 
 function createEmptyBoard(state) {
   let board = new Array();
-  for (let x = 0; x < state.width; x++) {
+  for (let x = 0; x < state.board.width; x++) {
     board[x] = new Array();
-    for (let y = 0; y < state.height; y++) {
+    for (let y = 0; y < state.board.height; y++) {
       board[x][y] = 0;
     }
   }
@@ -137,13 +136,13 @@ function getPossibleMoves(x, y) {
   if (x === 0 || board[y][x - 1] !== 0) {
     availableMoves = removeFromArray(availableMoves, "left");
   }
-  if (x === gameState.width - 1 || board[y][x + 1] !== 0) {
+  if (x === gameState.board.width - 1 || board[y][x + 1] !== 0) {
     availableMoves = removeFromArray(availableMoves, "right");
   }
   if (y === 0 || board[y - 1][x] !== 0) {
     availableMoves = removeFromArray(availableMoves, "up");
   }
-  if (y === gameState.height - 1 || board[y + 1][x] !== 0) {
+  if (y === gameState.board.height - 1 || board[y + 1][x] !== 0) {
     availableMoves = removeFromArray(availableMoves, "down");
   }
   return availableMoves;
@@ -205,13 +204,13 @@ function countAvailableSpaces(x, y, fill) {
   }
   copiedBoard[y][x] = fill;
 
-  if (x < gameState.width - 1) {
+  if (x < game.board.width - 1) {
     right = countAvailableSpaces(x + 1, y, fill);
   }
   if (x > 0) {
     left = countAvailableSpaces(x - 1, y, fill);
   }
-  if (y < gameState.height - 1) {
+  if (y < gameState.board.height - 1) {
     down = countAvailableSpaces(x, y + 1, fill);
   }
   if (y > 0) {
