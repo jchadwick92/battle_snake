@@ -211,6 +211,7 @@ function countAvailableSpaces(x, y, fill) {
     console.log("end recursion")
     return 0;
   }
+  console.log("width: ", game.board.width)
   copiedBoard[y][x] = fill;
 
   console.log(x < game.board.width - 1)
