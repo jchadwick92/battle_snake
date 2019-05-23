@@ -15,6 +15,8 @@ module.exports = function move(state) {
   gameState = state;
   setSnakeHeadPos(state);
   setFoodPositions(state);
+  console.log("snakehead pos: ", snakeHeadPos)
+  console.log("food positions: ", foodPositions)
   board = createEmptyBoard(state);
   markCells(state, board);
 
