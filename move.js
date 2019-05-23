@@ -198,11 +198,11 @@ function determineMove() {
 }
 
 function countAvailableSpaces(x, y, fill) {
+  console.log("width: ", game.board.width)
   let right = 0;
   let left = 0;
   let down = 0;
   let up = 0;
-  console.log("width: ", game.board.width)
   if (copiedBoard[y][x] !== 0) {
     // if point is filled end recursion
     console.log("end recursion")
