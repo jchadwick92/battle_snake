@@ -115,7 +115,7 @@ function markCells(state, board) {
 }
 
 function markSnakesMoves(state, board) {
-  board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y)).forEach(snake => {
+  state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y)).forEach(snake => {
     console.log("my snake: ", snakeHeadPos)
     console.log("snake: ", snake.body[0])
     if (snake.body[0].x > 0) {
@@ -135,7 +135,7 @@ function markSnakesMoves(state, board) {
 }
 
 function fillPoint(x, y, number, board) {
-  return (board[y][x] = number);
+  board[y][x] = number;
 }
 
 function createEmptyBoard(state) {
