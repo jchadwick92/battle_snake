@@ -208,6 +208,7 @@ function countAvailableSpaces(x, y, fill) {
   let up = 0;
   if (copiedBoard[y][x] !== 0) {
     // if point is filled end recursion
+    console.log("end recursion")
     return 0;
   }
   copiedBoard[y][x] = fill;
