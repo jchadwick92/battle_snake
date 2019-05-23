@@ -1,13 +1,78 @@
 // Todo: follow tail
+// remove tails if not 1 space from food
 
 let gameState;
-
 let snakeHeadPos;
 let foodPositions;
 let closestFoodPos;
 let board;
+let initialPossibleMoves;
 let possibleMoves;
 let copiedBoard;
+
+module.exports = function move(state) {
+  console.log("----------------------------------------------");
+  gameState = state;
+  setSnakeHeadPos(state);
+  setFoodPositions(state);
+  board = createEmptyBoard(state);
+  markCells(state, board);
+
+  copiedBoard = createEmptyBoard(state);
+  markCells(state, copiedBoard);
+
+  initialPossibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
+  console.log(initialPossibleMoves);
+
+  // mark dead ends
+  markDeadEnds(initialPossibleMoves)
+
+  possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
+
+  console.log(board);
+  console.log(copiedBoard);
+  closestFoodPos = findClosestFood();
+  return determineMove();
+};
+
+function fillBoardFromCopy(fill, copiedBoard, board) {
+  for (let y = 0; y < copiedBoard.length; y++) {
+    for (let x = 0; x < copiedBoard[y].length; x++) {
+      if (copiedBoard[y][x] === fill) {
+        board[y][x] = 1;
+      }
+    }
+  }
+}
+
+function markDeadEnds(possibleMoves) {
+  possibleMoves.forEach(move => {
+    if (move === "right") {
+      let right = countAvailableSpaces(snakeHeadPos.x + 1, snakeHeadPos.y, 2);
+      if (right > 0 && right < 15) {
+        fillBoardFromCopy(2, copiedBoard, board);
+      }
+    }
+    if (move === "left") {
+      let left = countAvailableSpaces(snakeHeadPos.x - 1, snakeHeadPos.y, 3);
+      if (left > 0 && left < 15) {
+        fillBoardFromCopy(3, copiedBoard, board);
+      }
+    }
+    if (move === "down") {
+      let down = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y + 1, 4);
+      if (down > 0 && down < 15) {
+        fillBoardFromCopy(4, copiedBoard, board);
+      }
+    }
+    if (move === "up") {
+      let up = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y - 1, 5);
+      if (up > 0 && up < 15) {
+        fillBoardFromCopy(5, copiedBoard, board);
+      }
+    }
+  });
+}
 
 function findClosestFood() {
   return foodPositions
@@ -30,100 +95,17 @@ function getYDist(snakeHead, point) {
 }
 
 function setSnakeHeadPos(state) {
-  snakeHeadPos = state.you.body.data[0]; // state.you.body.data[0];
+  snakeHeadPos = state.you.body[0]; // state.you.body.data[0];
 }
 function setFoodPositions(state) {
-  foodPositions = state.food.data; // state.food.data;
+  foodPositions = state.food; // state.food.data;
 }
 
-module.exports = function move(state) {
-  console.log("----------------------------------------------")
-  gameState = state;
-  setSnakeHeadPos(state);
-  setFoodPositions(state);
-  board = createEmptyBoard(state);
-  markCells(state, board);
-
-  copiedBoard = createEmptyBoard(state)
-  markCells(state, copiedBoard)
-
-  possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
-  console.log(possibleMoves)
-
-  possibleMoves.forEach(move => {
-      if (move === "right") {
-         let spacesRight = countAvailableSpaces(snakeHeadPos.x+1, snakeHeadPos.y, 2)
-         if (spacesRight > 0 && spacesRight < 15) {
-             // mark spaces on board
-             for (let y=0; y < copiedBoard.length; y++){
-                for (let x=0; x < copiedBoard[y].length; x++) {
-                    if (copiedBoard[y][x] === 2) {
-                        board[y][x] = 1;
-                    }
-                }
-            }
-         }
-      }
-      if (move === "left") {
-        let spacesLeft = countAvailableSpaces(snakeHeadPos.x-1, snakeHeadPos.y, 3)
-        if (spacesLeft > 0 && spacesLeft < 15) {
-            // mark spaces on board
-            for (let y=0; y < copiedBoard.length; y++){
-                for (let x=0; x < copiedBoard[y].length; x++) {
-                    if (copiedBoard[y][x] === 3) {
-                        board[y][x] = 1;
-                    }
-                }
-            }
-        }
-      }
-      if (move === "down") {
-        let spacesDown = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y+1, 4)
-        if (spacesDown > 0 && spacesDown < 15) {
-            // mark spaces on board
-            for (let y=0; y < copiedBoard.length; y++){
-                for (let x=0; x < copiedBoard[y].length; x++) {
-                    if (copiedBoard[y][x] === 4) {
-                        board[y][x] = 1;
-                    }
-                }
-            }
-        }
-      }
-      if (move === "up") {
-        let spacesUp = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y-1, 5)
-        if (spacesUp > 0 && spacesUp < 15) {
-            // mark spaces on board
-            for (let y=0; y < copiedBoard.length; y++){
-                for (let x=0; x < copiedBoard[y].length; x++) {
-                    if (copiedBoard[y][x] === 5) {
-                        board[y][x] = 1;
-                    }
-                }
-            }
-        }
-      }
-  })
-
-  possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
-
-//   console.log("Available spaces right: ", countAvailableSpaces(snakeHeadPos.x+1, snakeHeadPos.y, 2))
-//   console.log("Available spaces left: ", countAvailableSpaces(snakeHeadPos.x-1, snakeHeadPos.y, 3))
-//   console.log("Available spaces down: ", countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y+1, 4))
-//   console.log("Available spaces up: ", countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y-1, 5)) // if y=0 then this will break
-
-
-  console.log(board);
-  console.log(copiedBoard)
-  closestFoodPos = findClosestFood();
-  return determineMove();
-};
-
 function markCells(state, board) {
-    state.snakes.data.map(snake =>
-  //state.snakes.map(snake =>
-    snake.body.data.map(point => {
-   // snake.body.map(point => {
+  //state.snakes.data.map(snake =>
+    state.snakes.map(snake =>
+    //snake.body.data.map(point => {
+      snake.body.map(point => {
       fillPoint(point.x, point.y, 1, board);
     })
   );
@@ -145,6 +127,9 @@ function createEmptyBoard(state) {
 }
 
 function getPossibleMoves(x, y) {
+  function removeFromArray(arr, val) {
+    return arr.filter(el => el != val);
+  }
   let availableMoves = ["up", "down", "left", "right"];
   if (x === 0 || board[y][x - 1] !== 0) {
     availableMoves = removeFromArray(availableMoves, "left");
@@ -161,11 +146,15 @@ function getPossibleMoves(x, y) {
   return availableMoves;
 }
 
-function removeFromArray(arr, val) {
-  return arr.filter(el => el != val);
-}
-
 function determineMove() {
+  if (possibleMoves.length == 0) {
+    return {
+      move:
+        initialPossibleMoves[
+          Math.floor(Math.random() * initialPossibleMoves.length)
+        ]
+    };
+  }
   if (possibleMoves.length == 1) {
     return { move: possibleMoves[0] };
   }
@@ -202,61 +191,28 @@ function determineMove() {
     }; // do better here
 }
 
-// function recursiveFill(x, y) {
-//   let possibleMoves = getPossibleMoves(x, y);
-//   if (possibleMoves.length === 0) {
-//     return 0;
-//   } else {
-//     let total = 0;
-//     for (dir of possibleMoves) {
-//       if (dir === "right") {
-//         total = 1 + recursiveFill(x + 1, y);
-//       }
-//       if (dir === "left") {
-//         total = 1 + recursiveFill(x - 1, y);
-//       }
-//       if (dir === "up") {
-//         total = 1 + recursiveFill(x, y - 1);
-//       }
-//       if (dir === "down") {
-//         total = 1 + recursiveFill(x, y + 1);
-//       }
-//       return total;
-//     }
-//   }
-// }
-
-function recursion(x, y) {
-  let possibleMoves = getPossibleMoves(x, y);
-  if ((possibleMoves.length === 0)) {
-    fillPoint(x, y, 2);
-  }
-  if (possibleMoves.length == 1) {
-
-  }
-}
-
 function countAvailableSpaces(x, y, fill) {
-    let right = 0;
-    let left = 0;
-    let down = 0;
-    let up = 0;
-    if (copiedBoard[y][x] !== 0) { // if point is filled end recursion
-        return 0
-    }
-    copiedBoard[y][x] = fill;
+  let right = 0;
+  let left = 0;
+  let down = 0;
+  let up = 0;
+  if (copiedBoard[y][x] !== 0) {
+    // if point is filled end recursion
+    return 0;
+  }
+  copiedBoard[y][x] = fill;
 
-    if (x < gameState.width - 1) {
-        right = countAvailableSpaces(x+1, y, fill)
-    }
-    if (x > 0) {
-        left = countAvailableSpaces(x-1, y, fill)
-    }
-    if (y < gameState.height -1) {
-        down = countAvailableSpaces(x, y+1, fill)
-    }
-    if (y > 0) {
-        up = countAvailableSpaces(x, y-1, fill)
-    }
-    return 1 + right + left + up + down;
+  if (x < gameState.width - 1) {
+    right = countAvailableSpaces(x + 1, y, fill);
+  }
+  if (x > 0) {
+    left = countAvailableSpaces(x - 1, y, fill);
+  }
+  if (y < gameState.height - 1) {
+    down = countAvailableSpaces(x, y + 1, fill);
+  }
+  if (y > 0) {
+    up = countAvailableSpaces(x, y - 1, fill);
+  }
+  return 1 + right + left + up + down;
 }
