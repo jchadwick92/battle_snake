@@ -17,6 +17,7 @@ module.exports = function move(state) {
   setFoodPositions(state);
   board = createEmptyBoard(state);
   markCells(state, board);
+  markSnakesMoves(state, board)
 
   copiedBoard = createEmptyBoard(state);
   markCells(state, copiedBoard);
@@ -28,10 +29,8 @@ module.exports = function move(state) {
   markDeadEnds(initialPossibleMoves)
 
   possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
-  console.log("possible moves: ", possibleMoves)
 
   closestFoodPos = findClosestFood();
-  console.log("closest food: ", findClosestFood())
   return determineMove();
 };
 
@@ -75,7 +74,6 @@ function markDeadEnds(possibleMoves) {
 }
 
 function findClosestFood() {
-  console.log("food positions: ", foodPositions)
   if (foodPositions.length !== 0) {
     return foodPositions
     .map(food =>
@@ -107,13 +105,20 @@ function setFoodPositions(state) {
 }
 
 function markCells(state, board) {
-  //state.snakes.data.map(snake =>
     state.board.snakes.map(snake =>
-    //snake.body.data.map(point => {
       snake.body.map(point => {
       fillPoint(point.x, point.y, 1, board);
     })
   );
+}
+
+function markSnakesMoves(state, board) {
+  state.board.snakes.map(snake => {
+    fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
+    fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
+    fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
+    fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
+  })
 }
 
 function fillPoint(x, y, number, board) {
