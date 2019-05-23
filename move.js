@@ -113,20 +113,27 @@ function markCells(state, board) {
     })
   );
 }
-
+// (x > 0 && x < board.width && y > 0 && y < board.height)
 function markSnakesMoves(state, board) {
   state.board.snakes.filter(snake => (snake.body[0].x !== snakeHeadPos.x && snake.body[0].y !== snakeHeadPos.y)).map(snake => {
-    fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
-    fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
-    fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
-    fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
+    if (x > 0) {
+      fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
+    }
+    if (x < board.width) {
+      fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
+
+    }
+    if (y > 0) {
+      fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
+    }
+    if (y < board.height) {
+      fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
+    }
   })
 }
 
 function fillPoint(x, y, number, board) {
-  if (x > 0 && x < board.width && y > 0 && y < board.height) {
-    return (board[y][x] = number);
-  }
+  return (board[y][x] = number);
 }
 
 function createEmptyBoard(state) {
