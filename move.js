@@ -198,6 +198,9 @@ function determineMove() {
 }
 
 function countAvailableSpaces(x, y, fill) {
+  console.log("x: ", x)
+  console.log("y: ", y)
+  console.log("fill: ", fill)
   let right = 0;
   let left = 0;
   let down = 0;
