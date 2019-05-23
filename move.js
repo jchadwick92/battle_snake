@@ -16,7 +16,6 @@ module.exports = function move(state) {
   gameState = state;
   setSnakeHeadPos(state);
   setFoodPositions(state);
-  console.log("food pos: ", closestFoodPos)
   board = createEmptyBoard(state);
   markCells(state, board);
 
@@ -100,6 +99,7 @@ function setSnakeHeadPos(state) {
   snakeHeadPos = state.you.body[0]; // state.you.body.data[0];
 }
 function setFoodPositions(state) {
+  console.log("food: ", state.board.food)
   foodPositions = state.board.food; // state.food.data;
 }
 
