@@ -44,6 +44,7 @@ app.post('/move', (request, response) => {
   //   move: 'left', // one of: ['up','down','left','right']
   // }
   //console.log(request.body)
+  console.log("move functioning")
   data = move(request.body) // move(request.body)
 
   return response.json(data)
