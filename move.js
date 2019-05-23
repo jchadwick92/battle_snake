@@ -114,7 +114,7 @@ function markCells(state, board) {
 }
 
 function markSnakesMoves(state, board) {
-  state.board.snakes.map(snake => {
+  state.board.snakes.filter(snake => (snake.body[0].x !== snakeHeadPos.x && snake.body[0].y !== snakeHeadPos.y)).map(snake => {
     fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
     fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
     fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
