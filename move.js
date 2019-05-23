@@ -15,6 +15,7 @@ module.exports = function move(state) {
   gameState = state;
   setSnakeHeadPos(state);
   setFoodPositions(state);
+
   board = createEmptyBoard(state);
   markCells(state, board);
   markSnakesMoves(state, board)
@@ -123,7 +124,9 @@ function markSnakesMoves(state, board) {
 }
 
 function fillPoint(x, y, number, board) {
-  return (board[y][x] = number);
+  if (x > 0 && x < board.width && y > 0 && y < board.height) {
+    return (board[y][x] = number);
+  }
 }
 
 function createEmptyBoard(state) {
