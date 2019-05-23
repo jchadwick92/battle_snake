@@ -201,6 +201,7 @@ function countAvailableSpaces(x, y, fill) {
   console.log("x: ", x)
   console.log("y: ", y)
   console.log("fill: ", fill)
+  console.log(copiedBoard[y][x])
   let right = 0;
   let left = 0;
   let down = 0;
@@ -212,15 +213,19 @@ function countAvailableSpaces(x, y, fill) {
   copiedBoard[y][x] = fill;
 
   if (x < game.board.width - 1) {
+    console.log("a")
     right = countAvailableSpaces(x + 1, y, fill);
   }
   if (x > 0) {
+    console.log("b")
     left = countAvailableSpaces(x - 1, y, fill);
   }
   if (y < gameState.board.height - 1) {
+    console.log("c")
     down = countAvailableSpaces(x, y + 1, fill);
   }
   if (y > 0) {
+    console.log("d")
     up = countAvailableSpaces(x, y - 1, fill);
   }
   return 1 + right + left + up + down;
