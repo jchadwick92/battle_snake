@@ -198,6 +198,7 @@ function determineMove() {
 }
 
 function countAvailableSpaces(x, y, fill) {
+  console.log("aaa")
   console.log("width: ", game.board.width)
   let right = 0;
   let left = 0;
