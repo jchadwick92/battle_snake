@@ -17,6 +17,7 @@ let globalUp;
 let globalDown;
 
 module.exports = function move(state) {
+  closestFoodPos = null
   globalLeft = 0
   gloablRight = 0
   globalUp = 0
