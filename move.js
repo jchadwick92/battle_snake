@@ -1,5 +1,6 @@
 // Todo: follow tail
 // remove tails if not 1 space from food
+// if dead ends on both sides, choose the way with more spaces
 
 let gameState;
 let snakeHeadPos;
@@ -51,7 +52,7 @@ function markCloseSnakeMoves(state, board) {
         console.log("fill point left")
         fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
       }
-      if (snake.body[0].x < board.width) {
+      if (snake.body[0].x < state.board.width) {
         console.log("fill point right")
         fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
       }
@@ -59,7 +60,7 @@ function markCloseSnakeMoves(state, board) {
         console.log("fill point up")
         fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
       }
-      if (snake.body[0].y < board.height) {
+      if (snake.body[0].y < state.board.height) {
         console.log("fill point down")
         fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
       }
