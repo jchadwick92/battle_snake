@@ -83,28 +83,28 @@ function markDeadEnds(possibleMoves) {
     if (move === "right") {
       gloablRight = countAvailableSpaces(snakeHeadPos.x + 1, snakeHeadPos.y, 2);
       console.log("spaces right = ", gloablRight)
-      if (right > 0 && right < 15) {
+      if (gloablRight > 0 && gloablRight < 15) {
         fillBoardFromCopy(2, copiedBoard, board);
       }
     }
     if (move === "left") {
       globalLeft = countAvailableSpaces(snakeHeadPos.x - 1, snakeHeadPos.y, 3);
       console.log("spaces left = ", globalLeft)
-      if (left > 0 && left < 15) {
+      if (globalLeft > 0 && globalLeft < 15) {
         fillBoardFromCopy(3, copiedBoard, board);
       }
     }
     if (move === "down") {
       globalDown = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y + 1, 4);
       console.log("spaces down = ", globalDown)
-      if (down > 0 && down < 15) {
+      if (globalDown > 0 && globalDown < 15) {
         fillBoardFromCopy(4, copiedBoard, board);
       }
     }
     if (move === "up") {
       globalUp = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y - 1, 5);
       console.log("spaces up = ", globalUp)
-      if (up > 0 && up < 15) {
+      if (globalUp > 0 && globalUp < 15) {
         fillBoardFromCopy(5, copiedBoard, board);
       }
     }
