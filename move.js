@@ -17,7 +17,7 @@ let globalUp;
 let globalDown;
 
 module.exports = function move(state) {
-  closestFoodPos = null
+  closestFoodPos = false
   globalLeft = 0
   gloablRight = 0
   globalUp = 0
@@ -216,6 +216,7 @@ function determineMove() {
     return { move: possibleMoves[0] };
   }
   if (closestFoodPos) {
+    console.log("going for food")
     if (
       getXDist(snakeHeadPos, closestFoodPos) > 0 &&
       possibleMoves.includes("right")
