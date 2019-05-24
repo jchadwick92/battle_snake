@@ -41,27 +41,20 @@ function markCloseSnakeMoves(state, board) {
   const enemySnakes = state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y))
   enemySnakes
   .forEach(snake => {
-    console.log("Enemy snake length = ", snake.body.length)
-    console.log("My snake length = ", state.you.body.length)
     console.log("Enemy snake head: ", snake.body[0])
     console.log("My snake head; ", state.you.body[0])
 
-    if (true) {//(snake.body.length >= state.you.body.length) {      
-      console.log("x: ", snake.body[0].x, "y: ", snake.body[0].y)
+    if (snake.body.length >= state.you.body.length) {      
       if (snake.body[0].x > 0) {
-        console.log("fill point left")
         fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
       }
       if (snake.body[0].x < state.board.width) {
-        console.log("fill point right")
         fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
       }
       if (snake.body[0].y > 0) {
-        console.log("fill point up")
         fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
       }
       if (snake.body[0].y < state.board.height) {
-        console.log("fill point down")
         fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
       }
     }
