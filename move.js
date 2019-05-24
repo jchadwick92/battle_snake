@@ -2,6 +2,7 @@
 // remove tails if not 1 space from food
 // split initial moves up
 // only go for food if smaller and above size x
+// fill other snakes possible moves
 
 let gameState;
 let snakeHeadPos;
@@ -63,19 +64,21 @@ function getLongestSnake(state) {
 function markCloseSnakeMoves(state, board) {
   const enemySnakes = state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y))
   enemySnakes
-  .forEach(snake => {   
-    if (snake.body[0].x > 0) {
-      fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
-    }
-    if (snake.body[0].x < state.board.width -1) {
-      fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
-    }
-    if (snake.body[0].y > 0) {
-      fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
-    }
-    if (snake.body[0].y < state.board.height -1) {
-      fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
-    }
+  .forEach(snake => {
+    if (snake.body.length >= state.you.body.length) {
+      if (snake.body[0].x > 0) {
+        fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
+      }
+      if (snake.body[0].x < state.board.width -1) {
+        fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
+      }
+      if (snake.body[0].y > 0) {
+        fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
+      }
+      if (snake.body[0].y < state.board.height -1) {
+        fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
+      }
+    } 
   })
 }
 
