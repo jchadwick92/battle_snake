@@ -10,8 +10,16 @@ let board;
 let initialPossibleMoves;
 let possibleMoves;
 let copiedBoard;
+let globalLeft;
+let gloablRight;
+let globalUp;
+let globalDown;
 
 module.exports = function move(state) {
+  globalLeft = 0
+  gloablRight = 0
+  globalUp = 0
+  globalDown = 0
   console.log("----------------------------------------------");
   gameState = state;
   setSnakeHeadPos(state);
@@ -32,6 +40,7 @@ module.exports = function move(state) {
   markDeadEnds(initialPossibleMoves)
 
   possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
+  console.log("possible moves: ", possibleMoves)
 
   closestFoodPos = findClosestFood();
   return determineMove();
