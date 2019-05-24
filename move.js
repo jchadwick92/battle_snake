@@ -42,10 +42,10 @@ function markCloseSnakeMoves(state, board) {
   .forEach(snake => {
     console.log("Enemy snake length = ", snake.body.length)
     console.log("My snake length = ", state.you.body.length)
+    console.log("Enemy snake head: ", snake.body[0])
+    console.log("My snake head; ", state.you.body[0])
 
-    if (snake.body.length >= state.you.body.length) {
-      console.log("Enemy snake head: ", snake.body[0])
-      console.log("My snake head; ", state.you.body[0])
+    if (true) {//(snake.body.length >= state.you.body.length) {      
       console.log("x: ", snake.body[0].x, "y: ", snake.body[0].y)
       if (snake.body[0].x > 0) {
         console.log("fill point left")
