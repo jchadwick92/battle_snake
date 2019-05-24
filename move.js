@@ -1,7 +1,7 @@
 // Todo: follow tail
 // remove tails if not 1 space from food
-// if dead ends on both sides, choose the way with more spaces
 // split initial moves up
+// only go for food if smaller and above size x
 
 let gameState;
 let snakeHeadPos;
@@ -28,14 +28,15 @@ module.exports = function move(state) {
 
   board = createEmptyBoard(state);
   markCells(state, board);
-  markCloseSnakeMoves(state, board)
-
-  copiedBoard = createEmptyBoard(state);
-  markCells(state, copiedBoard);
-  markCloseSnakeMoves(state, copiedBoard)
 
   initialPossibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
   console.log("initial possible moves: ", initialPossibleMoves);
+
+  copiedBoard = createEmptyBoard(state);
+  markCells(state, copiedBoard);
+
+  markCloseSnakeMoves(state, board)
+  markCloseSnakeMoves(state, copiedBoard)
 
   // mark dead ends
   markDeadEnds(initialPossibleMoves)
@@ -43,7 +44,13 @@ module.exports = function move(state) {
   possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
   console.log("possible moves: ", possibleMoves)
 
-  closestFoodPos = findClosestFood();
+  if (state.you.body.length < 12) {
+    closestFoodPos = findClosestFood();
+  } else {
+    if (state.you.health < 60) {
+      closestFoodPos = findClosestFood();
+    }
+  }
   return determineMove();
 };
 
@@ -82,28 +89,24 @@ function markDeadEnds(possibleMoves) {
   possibleMoves.forEach(move => {
     if (move === "right") {
       gloablRight = countAvailableSpaces(snakeHeadPos.x + 1, snakeHeadPos.y, 2);
-      console.log("spaces right = ", gloablRight)
       if (gloablRight > 0 && gloablRight < 15) {
         fillBoardFromCopy(2, copiedBoard, board);
       }
     }
     if (move === "left") {
       globalLeft = countAvailableSpaces(snakeHeadPos.x - 1, snakeHeadPos.y, 3);
-      console.log("spaces left = ", globalLeft)
       if (globalLeft > 0 && globalLeft < 15) {
         fillBoardFromCopy(3, copiedBoard, board);
       }
     }
     if (move === "down") {
       globalDown = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y + 1, 4);
-      console.log("spaces down = ", globalDown)
       if (globalDown > 0 && globalDown < 15) {
         fillBoardFromCopy(4, copiedBoard, board);
       }
     }
     if (move === "up") {
       globalUp = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y - 1, 5);
-      console.log("spaces up = ", globalUp)
       if (globalUp > 0 && globalUp < 15) {
         fillBoardFromCopy(5, copiedBoard, board);
       }
