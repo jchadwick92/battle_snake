@@ -1,6 +1,7 @@
 // Todo: follow tail
 // remove tails if not 1 space from food
 // if dead ends on both sides, choose the way with more spaces
+// split initial moves up
 
 let gameState;
 let snakeHeadPos;
@@ -80,29 +81,29 @@ function fillBoardFromCopy(fill, copiedBoard, board) {
 function markDeadEnds(possibleMoves) {
   possibleMoves.forEach(move => {
     if (move === "right") {
-      let right = countAvailableSpaces(snakeHeadPos.x + 1, snakeHeadPos.y, 2);
-      console.log("spaces right = ", right)
+      gloablRight = countAvailableSpaces(snakeHeadPos.x + 1, snakeHeadPos.y, 2);
+      console.log("spaces right = ", gloablRight)
       if (right > 0 && right < 15) {
         fillBoardFromCopy(2, copiedBoard, board);
       }
     }
     if (move === "left") {
-      let left = countAvailableSpaces(snakeHeadPos.x - 1, snakeHeadPos.y, 3);
-      console.log("spaces left = ", left)
+      globalLeft = countAvailableSpaces(snakeHeadPos.x - 1, snakeHeadPos.y, 3);
+      console.log("spaces left = ", globalLeft)
       if (left > 0 && left < 15) {
         fillBoardFromCopy(3, copiedBoard, board);
       }
     }
     if (move === "down") {
-      let down = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y + 1, 4);
-      console.log("spaces down = ", down)
+      globalDown = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y + 1, 4);
+      console.log("spaces down = ", globalDown)
       if (down > 0 && down < 15) {
         fillBoardFromCopy(4, copiedBoard, board);
       }
     }
     if (move === "up") {
-      let up = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y - 1, 5);
-      console.log("spaces up = ", up)
+      globalUp = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y - 1, 5);
+      console.log("spaces up = ", globalUp)
       if (up > 0 && up < 15) {
         fillBoardFromCopy(5, copiedBoard, board);
       }
@@ -186,12 +187,22 @@ function getPossibleMoves(x, y) {
 
 function determineMove() {
   if (possibleMoves.length == 0) {
-    return {
-      move:
-        initialPossibleMoves[
-          Math.floor(Math.random() * initialPossibleMoves.length)
-        ]
-    };
+    if (globalDown >= gloablRight && globalDown >= globalLeft && globalDown >= globalUp) {
+      return {move: "down"}
+    } else if (globalUp >= gloablRight && globalUp >= globalLeft && globalUp >= globalDown) {
+      return {move: "up"}
+    } else if (gloablRight >= globalUp && gloablRight >= globalLeft && gloablRight >= globalDown) {
+      return {move: "right"}
+    } else if (globalLeft >= globalUp && globalLeft >= globalRight && globalLeft >= globalDown) {
+      return {move: "left"}
+    } else {
+      return {
+        move:
+          initialPossibleMoves[
+            Math.floor(Math.random() * initialPossibleMoves.length)
+          ]
+      }
+    }
   }
   if (possibleMoves.length == 1) {
     return { move: possibleMoves[0] };
