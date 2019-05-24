@@ -205,13 +205,18 @@ function determineMove() {
     }
   }
   if (possibleMoves.length == 0) {
+    console.log("0 possible moves")
     if (globalDown >= gloablRight && globalDown >= globalLeft && globalDown >= globalUp) {
+      console.log("move down")
       return {move: "down"}
     } else if (globalUp >= gloablRight && globalUp >= globalLeft && globalUp >= globalDown) {
+      console.log("move up")
       return {move: "up"}
     } else if (gloablRight >= globalUp && gloablRight >= globalLeft && gloablRight >= globalDown) {
+      console.log("move right")
       return {move: "right"}
     } else if (globalLeft >= globalUp && globalLeft >= globalRight && globalLeft >= globalDown) {
+      console.log("move left")
       return {move: "left"}
     } else {
       return {
