@@ -13,6 +13,7 @@ let copiedBoard;
 
 module.exports = function move(state) {
   console.log("----------------------------------------------");
+  console.log("height: ", state.board.height)
   gameState = state;
   setSnakeHeadPos(state);
   setFoodPositions(state);
@@ -46,19 +47,19 @@ function markCloseSnakeMoves(state, board) {
 
     if (snake.body.length >= state.you.body.length) {      
       if (snake.body[0].x > 0) {
-        console.log("fill point: x: ", snake.body[0].x -1, "y: ", snake.body[0].y, 1)
+        console.log("fill point: x: ", snake.body[0].x -1, "y: ", snake.body[0].y)
         fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
       }
-      if (snake.body[0].x < state.board.width) {
-        console.log("fill point: x: ", snake.body[0].x +1, "y: ", snake.body[0].y, 1)
+      if (snake.body[0].x < state.board.width -1) {
+        console.log("fill point: x: ", snake.body[0].x +1, "y: ", snake.body[0].y)
         fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
       }
       if (snake.body[0].y > 0) {
-        console.log("fill point: x: ", snake.body[0].x, "y: ", snake.body[0].y -1, 1)
+        console.log("fill point: x: ", snake.body[0].x, "y: ", snake.body[0].y -1)
         fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
       }
-      if (snake.body[0].y < state.board.height) {
-        console.log("fill point: x: ", snake.body[0].x, "y: ", snake.body[0].y +1, 1)
+      if (snake.body[0].y < state.board.height -1) {
+        console.log("fill point: x: ", snake.body[0].x, "y: ", snake.body[0].y +1)
         fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
       }
     }
