@@ -210,16 +210,16 @@ function determineMove() {
     console.log("globalUp: ", globalUp)
     console.log("gloablRight: ", gloablRight)
     console.log("globalLeft: ", globalLeft)
-    if (globalDown >= gloablRight && globalDown >= globalLeft && globalDown >= globalUp) {
+    if (globalDown > 0 && globalDown >= gloablRight && globalDown >= globalLeft && globalDown >= globalUp) {
       console.log("move down")
       return {move: "down"}
-    } else if (globalUp >= gloablRight && globalUp >= globalLeft && globalUp >= globalDown) {
+    } else if (globalDown > 0 && globalUp >= gloablRight && globalUp >= globalLeft && globalUp >= globalDown) {
       console.log("move up")
       return {move: "up"}
-    } else if (gloablRight >= globalUp && gloablRight >= globalLeft && gloablRight >= globalDown) {
+    } else if (globalDown > 0 && gloablRight >= globalUp && gloablRight >= globalLeft && gloablRight >= globalDown) {
       console.log("move right")
       return {move: "right"}
-    } else if (globalLeft >= globalUp && globalLeft >= globalRight && globalLeft >= globalDown) {
+    } else if (globalDown > 0 && globalLeft >= globalUp && globalLeft >= globalRight && globalLeft >= globalDown) {
       console.log("move left")
       return {move: "left"}
     } else {
