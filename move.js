@@ -13,7 +13,6 @@ let copiedBoard;
 
 module.exports = function move(state) {
   console.log("----------------------------------------------");
-  console.log("height: ", state.board.height)
   gameState = state;
   setSnakeHeadPos(state);
   setFoodPositions(state);
@@ -42,24 +41,17 @@ function markCloseSnakeMoves(state, board) {
   const enemySnakes = state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y))
   enemySnakes
   .forEach(snake => {
-    console.log("Enemy snake head: ", snake.body[0])
-    console.log("My snake head; ", state.you.body[0])
-
     if (snake.body.length >= state.you.body.length) {      
       if (snake.body[0].x > 0) {
-        console.log("fill point: x: ", snake.body[0].x -1, "y: ", snake.body[0].y)
         fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
       }
       if (snake.body[0].x < state.board.width -1) {
-        console.log("fill point: x: ", snake.body[0].x +1, "y: ", snake.body[0].y)
         fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
       }
       if (snake.body[0].y > 0) {
-        console.log("fill point: x: ", snake.body[0].x, "y: ", snake.body[0].y -1)
         fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
       }
       if (snake.body[0].y < state.board.height -1) {
-        console.log("fill point: x: ", snake.body[0].x, "y: ", snake.body[0].y +1)
         fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
       }
     }
@@ -80,24 +72,28 @@ function markDeadEnds(possibleMoves) {
   possibleMoves.forEach(move => {
     if (move === "right") {
       let right = countAvailableSpaces(snakeHeadPos.x + 1, snakeHeadPos.y, 2);
+      console.log("spaces right = ", right)
       if (right > 0 && right < 15) {
         fillBoardFromCopy(2, copiedBoard, board);
       }
     }
     if (move === "left") {
       let left = countAvailableSpaces(snakeHeadPos.x - 1, snakeHeadPos.y, 3);
+      console.log("spaces left = ", left)
       if (left > 0 && left < 15) {
         fillBoardFromCopy(3, copiedBoard, board);
       }
     }
     if (move === "down") {
       let down = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y + 1, 4);
+      console.log("spaces down = ", down)
       if (down > 0 && down < 15) {
         fillBoardFromCopy(4, copiedBoard, board);
       }
     }
     if (move === "up") {
       let up = countAvailableSpaces(snakeHeadPos.x, snakeHeadPos.y - 1, 5);
+      console.log("spaces up = ", up)
       if (up > 0 && up < 15) {
         fillBoardFromCopy(5, copiedBoard, board);
       }
@@ -142,25 +138,6 @@ function markCells(state, board) {
       fillPoint(point.x, point.y, 1, board);
     })
   );
-}
-
-function markSnakesMoves(state, board) {
-  state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y)).forEach(snake => {
-    console.log("my snake: ", snakeHeadPos)
-    console.log("snake: ", snake.body[0])
-    if (snake.body[0].x > 0) {
-      fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
-    }
-    if (snake.body[0].x < board.width) {
-      fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
-    }
-    if (snake.body[0].y > 0) {
-      fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
-    }
-    if (snake.body[0].y < board.height) {
-      fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
-    }
-  })
 }
 
 function fillPoint(x, y, number, board) {
