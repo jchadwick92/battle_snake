@@ -18,11 +18,11 @@ module.exports = function move(state) {
 
   board = createEmptyBoard(state);
   markCells(state, board);
-  markSnakesMoves(state, board)
+  markCloseSnakeMoves(state, board)
 
   copiedBoard = createEmptyBoard(state);
   markCells(state, copiedBoard);
-  markSnakesMoves(state, copiedBoard)
+  markCloseSnakeMoves(state, copiedBoard)
 
   initialPossibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
   console.log("initial possible moves: ", initialPossibleMoves);
@@ -35,6 +35,30 @@ module.exports = function move(state) {
   closestFoodPos = findClosestFood();
   return determineMove();
 };
+
+function markCloseSnakeMoves(state, board) {
+  state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y)).forEach(snake => {
+    if (snake.body.length >= state.you.body) {
+      console.log("Enemy snake: ", snake.body[0])
+      if (snake.body[0].x > 0) {
+        console.log("fill point left")
+        fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
+      }
+      if (snake.body[0].x < board.width) {
+        console.log("fill point right")
+        fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
+      }
+      if (snake.body[0].y > 0) {
+        console.log("fill point up")
+        fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
+      }
+      if (snake.body[0].y < board.height) {
+        console.log("fill point down")
+        fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
+      }
+    }
+  })
+}
 
 function fillBoardFromCopy(fill, copiedBoard, board) {
   for (let y = 0; y < copiedBoard.length; y++) {
@@ -123,7 +147,6 @@ function markSnakesMoves(state, board) {
     }
     if (snake.body[0].x < board.width) {
       fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
-
     }
     if (snake.body[0].y > 0) {
       fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
