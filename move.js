@@ -206,6 +206,10 @@ function determineMove() {
   }
   if (possibleMoves.length == 0) {
     console.log("0 possible moves")
+    console.log("globalDown: ", globalDown)
+    console.log("globalUp: ", globalUp)
+    console.log("gloablRight: ", gloablRight)
+    console.log("globalLeft: ", globalLeft)
     if (globalDown >= gloablRight && globalDown >= globalLeft && globalDown >= globalUp) {
       console.log("move down")
       return {move: "down"}
