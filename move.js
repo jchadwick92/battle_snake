@@ -56,7 +56,8 @@ module.exports = function move(state) {
 };
 
 function getLongestSnake(state) {
-  return Math.max(...state.board.snakes.map(snake => snake.body.length))
+  return Math.max(...state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y))
+  .map(snake => snake.body.length))
 }
 
 function markCloseSnakeMoves(state, board) {
