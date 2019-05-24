@@ -195,6 +195,14 @@ function getPossibleMoves(x, y) {
 }
 
 function determineMove() {
+  if (initialPossibleMoves.length === 1) {
+    return {
+      move:
+        initialPossibleMoves[
+          Math.floor(Math.random() * initialPossibleMoves.length)
+        ]
+    }
+  }
   if (possibleMoves.length == 0) {
     if (globalDown >= gloablRight && globalDown >= globalLeft && globalDown >= globalUp) {
       return {move: "down"}
