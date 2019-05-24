@@ -37,9 +37,16 @@ module.exports = function move(state) {
 };
 
 function markCloseSnakeMoves(state, board) {
-  state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y)).forEach(snake => {
+  const enemySnakes = state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y))
+  console.log(enemySnakes)
+  enemySnakes
+  .forEach(snake => {
+    console.log("Enemy snake length = ", snake.body.length)
+    console.log("My snake length = ", state.you.body)
+    
     if (snake.body.length >= state.you.body) {
       console.log("Enemy snake: ", snake.body[0])
+      c
       if (snake.body[0].x > 0) {
         console.log("fill point left")
         fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
