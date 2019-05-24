@@ -46,15 +46,19 @@ function markCloseSnakeMoves(state, board) {
 
     if (snake.body.length >= state.you.body.length) {      
       if (snake.body[0].x > 0) {
+        console.log("fill point: x: ", snake.body[0].x -1, "y: ", snake.body[0].y, 1)
         fillPoint(snake.body[0].x -1, snake.body[0].y, 1, board)
       }
       if (snake.body[0].x < state.board.width) {
+        console.log("fill point: x: ", snake.body[0].x +1, "y: ", snake.body[0].y, 1)
         fillPoint(snake.body[0].x +1, snake.body[0].y, 1, board)
       }
       if (snake.body[0].y > 0) {
+        console.log("fill point: x: ", snake.body[0].x, "y: ", snake.body[0].y -1, 1)
         fillPoint(snake.body[0].x, snake.body[0].y -1, 1, board)
       }
       if (snake.body[0].y < state.board.height) {
+        console.log("fill point: x: ", snake.body[0].x, "y: ", snake.body[0].y +1, 1)
         fillPoint(snake.body[0].x, snake.body[0].y + 1, 1, board)
       }
     }
