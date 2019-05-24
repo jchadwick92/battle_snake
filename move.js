@@ -44,6 +44,8 @@ module.exports = function move(state) {
   possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
   console.log("possible moves: ", possibleMoves)
 
+  console.log("my snake length = ", state.you.body.length)
+  console.log("longest snake = ", getLongestSnake(state))
   if (state.you.body.length < 12) {
     closestFoodPos = findClosestFood();
   } else {
@@ -53,6 +55,10 @@ module.exports = function move(state) {
   }
   return determineMove();
 };
+
+function getLongestSnake(state) {
+  return Math.max(state.board.snakes.map(snake => snake.body.length))
+}
 
 function markCloseSnakeMoves(state, board) {
   const enemySnakes = state.board.snakes.filter(snake => !(snake.body[0].x === snakeHeadPos.x && snake.body[0].y === snakeHeadPos.y))
