@@ -44,12 +44,10 @@ module.exports = function move(state) {
   possibleMoves = getPossibleMoves(snakeHeadPos.x, snakeHeadPos.y);
   console.log("possible moves: ", possibleMoves)
 
-  console.log("my snake length = ", state.you.body.length)
-  console.log("longest snake = ", getLongestSnake(state))
-  if (state.you.body.length < 12) {
+  if (state.you.health < 50) {
     closestFoodPos = findClosestFood();
   } else {
-    if (state.you.health < 60) {
+    if (getLongestSnake(state) >=  state.you.body.length - 2) {
       closestFoodPos = findClosestFood();
     }
   }
